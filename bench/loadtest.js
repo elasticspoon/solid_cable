@@ -5,7 +5,7 @@ import { Trend } from "k6/metrics";
 
 let rttTrend = new Trend("rtt", true);
 
-const WS_URL = __ENV.WS_URL || "wss://solid-cable.dev/cable";
+const WS_URL = __ENV.WS_URL || "ws://localhost:3000/cable";
 const WS_COOKIE = __ENV.WS_COOKIE; // we need a valid cookie to authorize request
 const MAX = parseInt(__ENV.MAX || "20");
 // Total test duration
@@ -34,7 +34,7 @@ export let options = {
 export default function () {
   const client = cable.connect(WS_URL, { cookies: WS_COOKIE, receiveTimeoutMS: 60000 });
 
-   if (!check(client, { "successful connection": (obj) => obj })) {
+  if (!check(client, { "successful connection": (obj) => obj })) {
     fail("connection failed");
   }
 
